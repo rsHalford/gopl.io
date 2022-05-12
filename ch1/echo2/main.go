@@ -10,14 +10,17 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 )
 
 func main() {
+	start := time.Now()
 	s := ""
 	for i, arg := range os.Args[1:] {
 		s += fmt.Sprintf("%d = %s\n", i, arg)
 	}
 	fmt.Printf("%s\n%s", os.Args[0], s)
+	fmt.Printf("%.4fs elapsed\n", time.Since(start).Seconds())
 }
 
 //!-
