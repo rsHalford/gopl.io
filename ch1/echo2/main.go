@@ -13,12 +13,11 @@ import (
 )
 
 func main() {
-	s, sep := "", ""
-	for _, arg := range os.Args[1:] {
-		s += sep + arg
-		sep = " "
+	s := ""
+	for i, arg := range os.Args[1:] {
+		s += fmt.Sprintf("%d = %s\n", i, arg)
 	}
-	fmt.Printf("%s\t%s\n", os.Args[0], s)
+	fmt.Printf("%s\n%s", os.Args[0], s)
 }
 
 //!-

@@ -13,12 +13,11 @@ import (
 )
 
 func main() {
-	var s, sep string
+	var s string
 	for i := 1; i < len(os.Args); i++ {
-		s += sep + os.Args[i]
-		sep = " "
+		s += fmt.Sprintf("%d = %s\n", i, os.Args[i])
 	}
-	fmt.Printf("%s\t%s\n", os.Args[0], s)
+	fmt.Printf("%s\n%s", os.Args[0], s)
 }
 
 //!-
