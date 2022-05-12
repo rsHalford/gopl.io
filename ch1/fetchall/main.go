@@ -23,9 +23,9 @@ func main() {
 		go fetch(url, ch) // start a goroutine
 	}
 	for range os.Args[1:] {
-		fmt.Println(<-ch) // receive from channel ch
+		record(<-ch) // receive from channel ch
 	}
-	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
+	record(fmt.Sprintf("%.2fs elapsed\n", time.Since(start).Seconds()))
 }
 
 func fetch(url string, ch chan<- string) {
@@ -44,6 +44,28 @@ func fetch(url string, ch chan<- string) {
 	}
 	secs := time.Since(start).Seconds()
 	ch <- fmt.Sprintf("%.2fs  %7d  %s", secs, nbytes, url)
+}
+
+func record(result string) {
+	fileName := "fetchall_results.txt"
+	if _, err := os.Stat(fileName); os.IsNotExist(err) {
+		_, err = os.Create(fileName)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer f.Close()
+	_, err = fmt.Fprintln(f, result)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
 //!-
