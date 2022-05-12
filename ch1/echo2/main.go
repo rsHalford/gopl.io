@@ -18,7 +18,7 @@ func main() {
 		s += sep + arg
 		sep = " "
 	}
-	fmt.Println(s)
+	fmt.Printf("%s\t%s\n", os.Args[0], s)
 }
 
 //!-
